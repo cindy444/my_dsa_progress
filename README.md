@@ -1,2 +1,3 @@
-# my_dsa_progress
-Document down DSA progress 
+# My DSA Progress 
+
+Hello! Welcome to my DSA Playground! >.<
