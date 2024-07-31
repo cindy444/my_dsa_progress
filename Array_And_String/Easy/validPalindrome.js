@@ -107,3 +107,75 @@ var isPalindrome = function (s) {
 console.log(isPalindrome("A man, a plan, a canal: Panama")); //true
 console.log(isPalindrome("race a car")); //false
 console.log(isPalindrome(" ")); //true
+
+/**
+ * 
+//Second Approach - use Split into Half Method
+// Use more space 
+ */
+
+const isOdd = (num) => {
+  return num % 2 !== 0;
+}
+
+var isPalindromeDivideApproach = function(s) {
+  //split string and exclude all invalid values
+  const splitString = convertToLowerCaseAlphabet(s.trim().toLowerCase().split(''));
+
+  //first half
+  const firstHalfEndPoint =  Math.floor(splitString.length / 2);
+  const firstHalf = splitString.slice(0, firstHalfEndPoint); 
+
+  //second half
+  const secondHalfStartPoint = isOdd(splitString.length) ? firstHalfEndPoint + 1 : firstHalfEndPoint;
+  const secondHalf = splitString.slice(secondHalfStartPoint, splitString.length);
+
+  //sort + compare
+  const sortedFirstHalfString = firstHalf.sort().join('');
+  const sortedSecondHalfString = secondHalf.sort().join('');
+  return sortedFirstHalfString === sortedSecondHalfString;
+};
+
+
+console.log(isPalindromeDivideApproach("A man, a plan, a canal: Panama")); //true
+console.log(isPalindromeDivideApproach("race a car")); //false
+console.log(isPalindromeDivideApproach(" ")); //true
+
+
+/**
+ * 
+// Third Approach - use Two Pointers + while loop
+// left pointer and right pointer, they will move closer to each other 
+// until right pointer is larger than the left pointer 
+// compare the values, if find any difference return false
+// else continue until while loop ends and return true
+
+ */
+
+var isPalindromeTwoPointersApproach = function(s) {
+  //split string and exclude all invalid values
+  const splitString = convertToLowerCaseAlphabet(s.trim().toLowerCase().split(''));
+  let left = 0;
+  let right = splitString.length - 1;
+  while (left < right) {
+    if (splitString[left] !== splitString[right]) {
+      return false; 
+    }
+    left++;
+    right--;
+  }
+  return true;
+};
+
+console.log(isPalindromeTwoPointersApproach("A man, a plan, a canal: Panama")); //true
+console.log(isPalindromeTwoPointersApproach("race a car")); //false
+console.log(isPalindromeTwoPointersApproach(" ")); //true
+
+
+/**
+ * The below is the solution AI has provided. So much simplier than the three approaches I have tried above =.=!!!
+ */
+function isPalindrome(s) {
+  const sClean = s.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+  return sClean === sClean.split("").reverse().join("");
+}
