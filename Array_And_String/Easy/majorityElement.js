@@ -5,8 +5,6 @@ Given an array nums of size n, return the majority element.
 
 The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
 
- 
-
 Example 1:
 
 Input: nums = [3,2,3]
@@ -49,7 +47,7 @@ numOfVisited > 1: record numOfVisted++;
  * @param {number[]} nums
  * @return {number}
  */
-var majorityElement = function (nums) {
+var majorityElementWrong = function (nums) {
   const dict = new Map();
   for (let i = 0; i < nums.length; i++) {
     if (!dict.get(nums[i])) {
@@ -68,5 +66,40 @@ var majorityElement = function (nums) {
   }
 };
 
+console.log(majorityElementWrong([3, 2, 3])); //3
+console.log(majorityElementWrong([2, 2, 1, 1, 1, 2, 2])); //2
+console.log(majorityElementWrong([1, 2, 2, 2, 1, 1, 1, 2, 2])); //HEY QUESTION: guess what the output is???? why this approach does not work???? Take a guess... no worries, I have fixed this with the following implementation.
+
+/**
+ *
+ * @param {number[]} nums
+ * @return {number}
+ *
+ * Explanation:
+ * So the reason it is not going show a correct answer is because the maxValue is set within the for of loop. This means the maxValue will also refer to the first key value pair inside of the object and the if statement will also be true.
+ *
+ * In order to resolve the issue, lets take a look at the following and see
+ * what the difference is...
+ */
+var majorityElement = function (nums) {
+  const dict = new Map();
+  let maxValue = -Infinity;
+  for (let i = 0; i < nums.length; i++) {
+    if (!dict.get(nums[i])) {
+      dict.set(nums[i], 1);
+    } else {
+      dict.set(nums[i], dict.get(nums[i]) + 1);
+    }
+  }
+  const valuesOfKeys = [...dict.values()]; //turn a Map into an Array
+  maxValue = Math.max(...valuesOfKeys); //use spread operator to find values of keys
+  for (let [key] of dict) { //extract key from the Map
+    if (dict.get(key) === maxValue) {
+      return key;
+    }
+  }
+};
+
 console.log(majorityElement([3, 2, 3])); //3
 console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); //2
+console.log(majorityElement([1, 2, 2, 2, 1, 1, 1, 2, 2])); //2
