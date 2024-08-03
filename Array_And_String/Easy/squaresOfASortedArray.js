@@ -65,6 +65,7 @@ KEY TO REMEMBER:
 1. the pointers are always indexes, please do not get confused they are values
 2. two pointers problem in the opposite direction is usually in the while loop
 3. you can always push and reverse it and it will still count of O(N) time, since they are two different iterations.
+4. Similar pattern as "valid palindrome"!! 
  */
 
 var sortedSquares = function (nums) {
