@@ -48,24 +48,38 @@ abccccdd
 ^
 
 
-
+Approach:  Using a map to store all the chars and occurances 
+solved with O(N) Time and O(N) space 
  */
 
 /**
  * @param {string} s
  * @return {number}
- * 
- * Approach 1 not yet resolved
  */
 var longestPalindrome = function (s) {
   const dict = new Map();
   const s_array = s.split("");
   for (let i = 0; i < s_array.length; i++) {
-    if (!dict.has(s.array[i])) {
+    if (!dict.has(s_array[i])) {
       dict.set(s_array[i], 0);
     }
-    dict.set(s_array[i]);
+    dict.set(s_array[i], dict.get(s_array[i]) + 1);
   }
+  let result = 0;
+  let numOfOneCharOnly = 0;
+  for (let value of dict.values()) {
+    if (value % 2 === 0) {
+      result += value;
+    } else if (value > 1) {
+      result += value - 1;
+    } else {
+      numOfOneCharOnly++;
+    }
+  }
+  if (numOfOneCharOnly >= 1) {
+    result++;
+  }
+  return result;
 };
 
 console.log(longestPalindrome("abccccdd")); //7 "dccaccd"
